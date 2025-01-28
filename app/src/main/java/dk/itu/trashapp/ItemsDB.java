@@ -23,4 +23,12 @@ public class ItemsDB {
     public void fillItemsDB() {
         ItemsDB.add(new Item("carrot", "food"));
     }
+    public String search(String what){
+        for (Item item: ItemsDB){
+            if(item.getWhat().equals(what)){
+                return item.getWhere();
+            }
+        }
+        return "not found";
+    }
 }
