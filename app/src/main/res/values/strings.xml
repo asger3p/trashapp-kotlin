@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Trash App</string>
+    <string name="text_view">Hello, I am a TextView</string>
+    <string name="edit_text">Hello, I am an EditText</string>
 </resources>
