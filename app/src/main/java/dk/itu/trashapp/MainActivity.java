@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 items.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                String a = "Trash List:" + "\n" + itemsDB.search(inputText.getText().toString());
+                String a = "Trash List:" + "\n" + itemsDB.search(inputText.getText().toString().trim().toLowerCase());
                 items.setText(a);
             }
         });
