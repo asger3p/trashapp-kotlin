@@ -11,7 +11,7 @@ public class ItemsDB {
     public String listItems() {
         String r = "";
         for(Item i: ItemsDB)
-            r = r + "\n Buy " + i.toString();
+            r = r + "\n" + i.toString();
         return r;
     }
 

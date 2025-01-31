@@ -11,7 +11,7 @@ public class Item {
 
     @Override
     public String toString() {
-        return oneLine("", " in: ");
+        return oneLine("", " should be placed in: ");
     }
 
     public String getWhat() {
