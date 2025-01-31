@@ -10,4 +10,11 @@ public class TestItemsDB {
         ItemsDB myItemsDB = new ItemsDB();
         assertEquals("not found", myItemsDB.search(""));
     }
+
+    @Test
+    public void searchReturnsValueWhenKeyExists(){
+        ItemsDB testItemsDB = new ItemsDB();
+        testItemsDB.addItem("carrot", "food");
+        assertEquals("food", testItemsDB.search("carrot"));
+    }
 }
