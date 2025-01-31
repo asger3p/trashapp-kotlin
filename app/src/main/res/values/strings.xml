@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Trash App</string>
-    <string name="text_view">Hello, I am a TextView</string>
-    <string name="edit_text">Hello, I am an EditText</string>
+    <string name="text_view">Where to place item:</string>
+    <string name="edit_text">What is your trash item?</string>
 </resources>
