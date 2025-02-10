@@ -4,13 +4,25 @@ import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;
 
-public class TestItemsDB {
+import java.util.HashMap;
+import java.util.Map;
 
+public class TestItemsDB {
+    private final Map<String,String> myItemsMap = new HashMap<>();
     private ItemsDB myItemsDB;
 
     @Before
     public void setUp(){
-    myItemsDB = new ItemsDB();
+        myItemsDB = ItemsDB.get();
+    }
+
+    @Test
+    public void get_WhenItemsDBisCalled_returnsSingleton() {
+        ItemsDB test = ItemsDB.get();
+        test.addItem("cucumber", "food");
+        String expected = "food";
+        String actual = test.search("cucumber");
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -26,4 +38,5 @@ public class TestItemsDB {
         String searchResult = myItemsDB.search("carrot");
         assertEquals("food", searchResult);
     }
+
 }
