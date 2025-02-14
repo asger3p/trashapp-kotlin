@@ -4,23 +4,25 @@ import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 public class TestItemsDB {
     private ItemsDB myItemsDB;
 
     @Before
-    public void setUp(){
+    public void setUp() throws IOException {
         myItemsDB = ItemsDB.get();
     }
 
     @Test
-    public void get_MultipleCalls_ReturnsSameInstance() {
+    public void get_MultipleCalls_ReturnsSameInstance() throws IOException{
         ItemsDB instance1 = ItemsDB.get();
         ItemsDB instance2 = ItemsDB.get();
         assertSame(instance1, instance2);
       }
 
     @Test
-    public void addItem_WhenAddingItem_ItemDBIsUpdated(){
+    public void addItem_WhenAddingItem_ItemDBIsUpdated() throws IOException {
         String what = "bottle";
         String where = "recycling";
         myItemsDB.addItem(what, where);
@@ -34,7 +36,7 @@ public class TestItemsDB {
     }
 
     @Test
-    public void search_WhenKeyExists_ReturnsNotFound(){
+    public void search_WhenKeyExists_ReturnsNotFound() throws IOException{
         myItemsDB.addItem("carrot", "food");
         String searchResult = myItemsDB.search("carrot");
         assertEquals("food", searchResult);
