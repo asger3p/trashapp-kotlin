@@ -4,11 +4,7 @@ import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class TestItemsDB {
-    private final Map<String,String> myItemsMap = new HashMap<>();
     private ItemsDB myItemsDB;
 
     @Before
@@ -17,17 +13,22 @@ public class TestItemsDB {
     }
 
     @Test
-    public void get_WhenItemsDBisCalled_returnsSingleton() {
-        ItemsDB test = ItemsDB.get();
-        test.addItem("cucumber", "food");
-        String expected = "food";
-        String actual = test.search("cucumber");
-        assertEquals(expected, actual);
+    public void get_MultipleCalls_ReturnsSameInstance() {
+        ItemsDB instance1 = ItemsDB.get();
+        ItemsDB instance2 = ItemsDB.get();
+        assertSame(instance1, instance2);
+      }
+
+    @Test
+    public void addItem_WhenAddingItem_ItemDBIsUpdated(){
+        String what = "bottle";
+        String where = "recycling";
+        myItemsDB.addItem(what, where);
+        assertEquals(where, myItemsDB.search(what));
     }
 
     @Test
     public void search_WhenParamNotInDB_ReturnsNotFound(){
-
         String searchResult = myItemsDB.search("");
         assertEquals("not found", searchResult);
     }
