@@ -1,10 +1,9 @@
 package dk.itu.trashapp;
 
+import android.content.Context;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,11 +11,19 @@ public class ItemsDB {
 
     private static ItemsDB sItemsDB;
     private final Map<String, String> itemsMap = new HashMap<>();
+    private static Context context;
 
-    private ItemsDB() throws IOException {
-        fillItemsDB();
+    private ItemsDB() {
+        if(context == null) {
+            throw new IllegalStateException("context must be set first");
+        }
+        try {
+            fillItemsDB(context, "garbage.txt");
+        } catch (IOException ioe) {
+             System.out.println(ioe.getMessage());
+            }
     }
-    public static ItemsDB get() throws IOException {
+    public static ItemsDB get() {
         if(sItemsDB==null) sItemsDB = new ItemsDB();
         return sItemsDB;
     }
@@ -31,23 +38,25 @@ public class ItemsDB {
     }
 
     // Will be used later
-    public void addItem(String what, String where) throws IOException {
-        if(!search(what).equals("not found")){
-            String item = "\n" + what + ", " + where;
-            var writer = new BufferedWriter(new FileWriter("assets/garbage.txt", true));
-            writer.write(item);
+    public void addItem(String what, String where) {
             itemsMap.put(what, where);
-        } else {
-            return;
-        }
     }
 
-    public void fillItemsDB() throws IOException {
-        var reader = new BufferedReader(new FileReader("assets/garbage.txt"));
-        while(!reader.readLine().isEmpty()) {
-            String input = reader.readLine();
+    public static void setContext(Context newContext) {
+        context = newContext;
+    }
+
+    public void fillItemsDB(Context context, String path) throws IOException {
+        try {
+        var reader = new BufferedReader(new InputStreamReader(context.getAssets().open(path)));
+        String input = reader.readLine();
+        while (input != null) {
             String[] item = input.split(", ");
             itemsMap.put(item[0], item[1]);
+            input = reader.readLine();
+            }
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
         }
     }
 

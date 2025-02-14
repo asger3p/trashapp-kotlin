@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.IOException;
-
 public class MainActivity extends AppCompatActivity {
 
     private static ItemsDB itemsDB;
@@ -21,11 +19,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        try {
-            itemsDB = ItemsDB.get();
-        } catch (IOException ioe) {
-            System.out.println(ioe.getMessage());
-        }
+        ItemsDB.setContext(MainActivity.this);
+        itemsDB = ItemsDB.get();
+
 
         TextView items = findViewById(R.id.items);
         EditText inputText = findViewById(R.id.edit_text);

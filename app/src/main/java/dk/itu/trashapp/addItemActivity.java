@@ -6,7 +6,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.IOException;
 
 
 public class addItemActivity extends AppCompatActivity {
@@ -17,11 +16,7 @@ public class addItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_additem);
 
-        try {
-            itemsDB = ItemsDB.get();
-        } catch (IOException ioe) {
-            System.out.println(ioe.getMessage());
-        }
+        itemsDB = ItemsDB.get();
 
         TextView whatItemText = findViewById(R.id.what_text);
         TextView whereItemText = findViewById(R.id.where_text);
@@ -33,11 +28,8 @@ public class addItemActivity extends AppCompatActivity {
             String whereText = whereItemText.getText().toString().trim().toLowerCase();
 
             if ((!whatText. isEmpty()) && (!whereText. isEmpty())) {
-                try {
-                    itemsDB.addItem(whatText, whereText);
-                } catch (IOException ioe) {
-                    System.out.println(ioe.getMessage());
-                }
+                itemsDB.addItem(whatText, whereText);
+
                 whatItemText.setText("");
                 whereItemText.setText("");
             } else
