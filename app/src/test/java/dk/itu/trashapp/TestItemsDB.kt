@@ -1,45 +1,48 @@
-package dk.itu.trashapp;
+package dk.itu.trashapp
 
-import org.junit.Test;
-import org.junit.Before;
-import static org.junit.Assert.*;
+import dk.itu.trashapp.ItemsDB.Companion.get
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
+import java.io.IOException
 
-import java.io.IOException;
-
-public class TestItemsDB {
-    private ItemsDB myItemsDB;
+class TestItemsDB {
+    private var myItemsDB: ItemsDB? = null
 
     @Before
-    public void setUp() throws IOException {
-        myItemsDB = ItemsDB.get();
+    @Throws(IOException::class)
+    fun setUp() {
+        myItemsDB = get()
     }
 
     @Test
-    public void get_MultipleCalls_ReturnsSameInstance() throws IOException{
-        ItemsDB instance1 = ItemsDB.get();
-        ItemsDB instance2 = ItemsDB.get();
-        assertSame(instance1, instance2);
-      }
-
-    @Test
-    public void addItem_WhenAddingItem_ItemDBIsUpdated() throws IOException {
-        String what = "bottle";
-        String where = "recycling";
-        myItemsDB.addItem(what, where);
-        assertEquals(where, myItemsDB.search(what));
+    @Throws(IOException::class)
+    fun get_MultipleCalls_ReturnsSameInstance() {
+        val instance1 = get()
+        val instance2 = get()
+        Assert.assertSame(instance1, instance2)
     }
 
     @Test
-    public void search_WhenParamNotInDB_ReturnsNotFound(){
-        String searchResult = myItemsDB.search("");
-        assertEquals("not found", searchResult);
+    @Throws(IOException::class)
+    fun addItem_WhenAddingItem_ItemDBIsUpdated() {
+        val what = "bottle"
+        val where = "recycling"
+        myItemsDB!!.addItem(what, where)
+        Assert.assertEquals(where, myItemsDB!!.search(what))
     }
 
     @Test
-    public void search_WhenKeyExists_ReturnsNotFound() throws IOException{
-        myItemsDB.addItem("carrot", "food");
-        String searchResult = myItemsDB.search("carrot");
-        assertEquals("food", searchResult);
+    fun search_WhenParamNotInDB_ReturnsNotFound() {
+        val searchResult = myItemsDB!!.search("")
+        Assert.assertEquals("not found", searchResult)
     }
 
+    @Test
+    @Throws(IOException::class)
+    fun search_WhenKeyExists_ReturnsNotFound() {
+        myItemsDB!!.addItem("carrot", "food")
+        val searchResult = myItemsDB!!.search("carrot")
+        Assert.assertEquals("food", searchResult)
+    }
 }

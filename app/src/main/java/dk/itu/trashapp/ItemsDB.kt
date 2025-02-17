@@ -1,66 +1,68 @@
-package dk.itu.trashapp;
+package dk.itu.trashapp
 
-import android.content.Context;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
+import android.content.Context
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
 
-public class ItemsDB {
+class ItemsDB private constructor() {
+    private val itemsMap: MutableMap<String, String> = HashMap()
 
-    private static ItemsDB sItemsDB;
-    private final Map<String, String> itemsMap = new HashMap<>();
-    private static Context context;
-
-    private ItemsDB() {
-        if(context == null) {
-            throw new IllegalStateException("context must be set first");
-        }
+    init {
+        checkNotNull(context) { "context must be set first" }
         try {
-            fillItemsDB(context, "garbage.txt");
-        } catch (IOException ioe) {
-             System.out.println(ioe.getMessage());
-            }
-    }
-    public static ItemsDB get() {
-        if(sItemsDB==null) sItemsDB = new ItemsDB();
-        return sItemsDB;
-    }
-
-
-    public String listItems() {
-        String r = "";
-        for (HashMap.Entry <String, String> item: itemsMap.entrySet()) {
-            r = r + "\n" + item.getKey() + " in: " + item.getValue();
+            fillItemsDB(context!!, "garbage.txt")
+        } catch (ioe: IOException) {
+            println(ioe.message)
         }
-        return r;
+    }
+
+    fun listItems(): String {
+        var r = ""
+        for ((key, value) in itemsMap) {
+            r = """$r
+$key in: $value"""
+        }
+        return r
     }
 
     // Will be used later
-    public void addItem(String what, String where) {
-            itemsMap.put(what, where);
+    fun addItem(what: String, where: String) {
+        itemsMap[what] = where
     }
 
-    public static void setContext(Context newContext) {
-        context = newContext;
-    }
-
-    public void fillItemsDB(Context context, String path) throws IOException {
+    @Throws(IOException::class)
+    fun fillItemsDB(context: Context, path: String) {
         try {
-        var reader = new BufferedReader(new InputStreamReader(context.getAssets().open(path)));
-        String input = reader.readLine();
-        while (input != null) {
-            String[] item = input.split(", ");
-            itemsMap.put(item[0], item[1]);
-            input = reader.readLine();
+            val reader = BufferedReader(InputStreamReader(context.assets.open(path)))
+            var input = reader.readLine()
+            while (input != null) {
+                val item = input.split(", ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                itemsMap[item[0]] = item[1]
+                input = reader.readLine()
             }
-        } catch (IOException ioe) {
-            System.out.println(ioe.getMessage());
+        } catch (ioe: IOException) {
+            println(ioe.message)
         }
     }
 
-    public String search(String what){
-        return itemsMap.getOrDefault(what, "not found");
+    fun search(what: String): String? {
+        return itemsMap.getOrDefault(what, "not found")
+    }
+
+    companion object {
+        private var sItemsDB: ItemsDB? = null
+        private var context: Context? = null
+
+        @JvmStatic
+        fun get(): ItemsDB {
+            if (sItemsDB == null) sItemsDB = ItemsDB()
+            return sItemsDB!!
+        }
+
+
+        fun setContext(newContext: Context?) {
+            context = newContext
+        }
     }
 }

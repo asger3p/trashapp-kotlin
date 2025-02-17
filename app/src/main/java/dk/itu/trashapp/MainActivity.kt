@@ -1,49 +1,47 @@
-package dk.itu.trashapp;
+package dk.itu.trashapp
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.content.Intent
+import android.graphics.Color
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import java.util.Locale
 
-import androidx.appcompat.app.AppCompatActivity;
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-public class MainActivity extends AppCompatActivity {
-
-    private static ItemsDB itemsDB;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        ItemsDB.setContext(MainActivity.this);
-        itemsDB = ItemsDB.get();
+        ItemsDB.setContext(this@MainActivity)
+        itemsDB = ItemsDB.get()
 
 
-        TextView items = findViewById(R.id.items);
-        EditText inputText = findViewById(R.id.edit_text);
-        Button listItems = findViewById(R.id.where_button);
+        val items = findViewById<TextView>(R.id.items)
+        val inputText = findViewById<EditText>(R.id.edit_text)
+        val listItems = findViewById<Button>(R.id.where_button)
 
-        listItems.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                items.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                String a = "Trash List:" + "\n" + itemsDB.search(inputText.getText().toString().trim().toLowerCase());
-                items.setText(a);
-            }
-        });
+        listItems.setOnClickListener {
+            items.setBackgroundColor(Color.parseColor("#FFFFFF"))
+            val a = "Trash List:" + "\n" + itemsDB!!.search(
+                inputText.text.toString().trim { it <= ' ' }
+                    .lowercase(Locale.getDefault()))
+            items.text = a
+        }
 
-        Button addItem = findViewById(R.id.goTo_addItem_button);
+        val addItem = findViewById<Button>(R.id.goTo_addItem_button)
 
-        addItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent= new Intent(MainActivity.this, addItemActivity.class);
-                startActivity(intent);
-            }
-        });
+        addItem.setOnClickListener {
+            val intent = Intent(
+                this@MainActivity,
+                addItemActivity::class.java
+            )
+            startActivity(intent)
+        }
+    }
+
+    companion object {
+        private var itemsDB: ItemsDB? = null
     }
 }
