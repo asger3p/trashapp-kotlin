@@ -1,14 +1,9 @@
 package dk.itu.trashapp
 
-import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import java.util.Locale
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,10 +19,13 @@ class MainActivity : AppCompatActivity() {
     private fun setUpFragments(){
         val fm = supportFragmentManager
         var fragmentUI : Fragment? = fm.findFragmentById(R.id.container_ui)
-        if(fragmentUI == null) {
+        var fragmentList : Fragment? = fm.findFragmentById(R.id.container_list)
+        if(fragmentUI == null && fragmentList == null) {
             fragmentUI = SearchUIFragment()
+            fragmentList = ListFragment()
             fm.beginTransaction()
                 .add(R.id.container_ui, fragmentUI)
+                .add(R.id.container_list, fragmentList)
                 .commit()
         }
     }
