@@ -24,7 +24,8 @@ class SearchUIFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -37,9 +38,9 @@ class SearchUIFragment : Fragment() {
         whereButton.setOnClickListener {
             val what = itemWhat.text.toString().trim()
             itemWhat.setBackgroundColor(Color.parseColor("#FFFFFF"))
-            itemWhere.text = itemsDB.search(what)
+           itemWhere.text = itemsDB.search(what)
             itemWhat.onEditorAction(EditorInfo.IME_ACTION_DONE);
-            itemWhere.onEditorAction(EditorInfo.IME_ACTION_DONE);
+           itemWhere.onEditorAction(EditorInfo.IME_ACTION_DONE);
         }
 
         return v

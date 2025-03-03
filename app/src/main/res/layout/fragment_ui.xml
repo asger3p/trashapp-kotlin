@@ -9,42 +9,44 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="@string/where_text"
-            android:textSize="@dimen/text_size"/>
-        <EditText
-            android:id="@+id/where_text"
-            android:background="@color/white"
-            android:hint="@string/edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_weight="1"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/where_text"
+                android:textSize="@dimen/text_size"/>
+
+           <TextView
+                android:id="@+id/where_text"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="3"
+                android:background="@color/white"
+                />
+        </LinearLayout>
+
         <EditText
             android:id="@+id/what_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints=""
             android:minHeight="48dp"
             android:hint="@string/edit_text"
             android:inputType="text"
-            android:layout_marginBottom="5dp"
-            />
+            android:layout_marginBottom="5dp"/>
 
         <Button
             android:id="@+id/where_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:paddingStart="8dp"
-            android:paddingTop="4dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="4dp"
             android:text="Where" />
 
     </LinearLayout>
