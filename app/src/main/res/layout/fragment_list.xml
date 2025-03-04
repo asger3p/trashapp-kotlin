@@ -5,11 +5,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-        <TextView
-            android:id="@+id/list_items"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="top"
-            android:background="@color/white"/>
+            android:fillViewport="true">
+
+                <TextView
+                    android:id="@+id/list_items"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:background="@color/white"/>
+
+        </ScrollView>
 
 </LinearLayout>
