@@ -2,10 +2,19 @@
     <string name="app_name">Trash App</string>
     <string name="text_view">Where to place item:</string>
     <string name="edit_text">What is your trash item?</string>
-    <string name="what_text">What item?</string>
+
     <string name="where_text">Should be placed in: </string>
     <string name="add_item_button_text">Add new item</string>
-    <string name="empty_toast">Please type something in the what and where fields</string>
+    <string name="empty_toast">Type here</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add">Add new item</string>
+    <string name="delete">Delete item</string>
+
+    <string name="what_item">What item? </string>
+    <string name="where">Where?</string>
+    <string name="list">List all items</string>
+    <string name="back">Back</string>
+    <string name="removed">Removed </string>
+
 </resources>

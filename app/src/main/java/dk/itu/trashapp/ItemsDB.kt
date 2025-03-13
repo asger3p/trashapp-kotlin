@@ -31,6 +31,14 @@ $key in: $value"""
         itemsMap[what] = where
     }
 
+    fun removeItem(what: String) {
+        itemsMap.remove(what)
+    }
+
+    fun isPresent(what: String): Boolean {
+        return itemsMap[what] != null
+    }
+
     @Throws(IOException::class)
     fun fillItemsDB(context: Context, path: String) {
         try {

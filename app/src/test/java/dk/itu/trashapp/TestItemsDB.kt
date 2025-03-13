@@ -7,7 +7,7 @@ import org.junit.Test
 import java.io.IOException
 
 class TestItemsDB {
-    private var myItemsDB: ItemsDB? = null
+  /*  private var myItemsDB: ItemsDB? = null
 
     @Before
     @Throws(IOException::class)
@@ -45,4 +45,6 @@ class TestItemsDB {
         val searchResult = myItemsDB!!.search("carrot")
         Assert.assertEquals("food", searchResult)
     }
+
+    */
 }

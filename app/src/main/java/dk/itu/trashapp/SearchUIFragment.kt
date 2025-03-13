@@ -9,6 +9,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 
 /**
  * A simple [Fragment] subclass.
@@ -16,12 +17,6 @@ import androidx.fragment.app.Fragment
  * create an instance of this fragment.
  */
 class SearchUIFragment : Fragment() {
-    private lateinit var itemsDB: ItemsDB
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        itemsDB = ItemsDB.get()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,20 +25,37 @@ class SearchUIFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val v = inflater.inflate(R.layout.fragment_ui, container, false)
+        val viewModel = ViewModelProvider(requireActivity())[TrashViewModel::class.java]
 
         val itemWhat: TextView = v.findViewById(R.id.what_text)
         val itemWhere: TextView = v.findViewById(R.id.where_text)
 
-        val whereButton: Button = v.findViewById(R.id.where_button)
-        whereButton.setOnClickListener {
-            val what = itemWhat.text.toString().trim()
-            itemWhat.setBackgroundColor(Color.parseColor("#FFFFFF"))
-           itemWhere.text = itemsDB.search(what)
-            itemWhat.onEditorAction(EditorInfo.IME_ACTION_DONE);
-           itemWhere.onEditorAction(EditorInfo.IME_ACTION_DONE);
+        val findItems: Button = v.findViewById(R.id.find_button)
+        val addItem: Button = v.findViewById(R.id.add_button)
+        val deleteItem: Button = v.findViewById(R.id.delete_button)
+
+        addItem.setOnClickListener {
+            activity?.let { fragmentActivity ->
+                viewModel.onAddItemClick(
+                    itemWhat,
+                    itemWhere,
+                    fragmentActivity
+                )
+            }
+        }
+
+        // deleting a thing
+        deleteItem.setOnClickListener {
+            activity?.let { fragmentActivity ->
+                viewModel.onDeleteItemClick(itemWhat, fragmentActivity)
+            }
+        }
+
+        // finding a thing
+        findItems.setOnClickListener {
+            viewModel.onFindItemClick(itemWhat, itemWhere)
         }
 
         return v
     }
-
 }
